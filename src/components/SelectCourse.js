@@ -47,11 +47,16 @@ export default function AddPb() {
 					</a>
 				</Typography>
 			
-				<Autocomplete className="sticky-top" 
+				<Autocomplete 
+				className="sticky-top" 
+				disableClearable
 				options={courses}
-				renderInput={(params) => <TextField {...params} label="Search course" />}>
+				renderInput={(params) => <TextField {...params} label="Search course" InputProps={{
+					...params.InputProps,
+					type: 'search',
+				  }} />}>
 				</Autocomplete>
-			
+			{/* Tämä jos haluaa näkyville kaikki radat. (hidasti sovellusta)
 				<Box>
 					{courses.map((course, idx) => {
 						return (
@@ -64,7 +69,7 @@ export default function AddPb() {
 							</List>
 						);
 					})}
-				</Box>
+				</Box> */}
 			</Box>
 		</Box>
 	);
