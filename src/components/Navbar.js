@@ -1,12 +1,27 @@
-import React from 'react'
+import { React, useState } from 'react';
+import { Box, Tabs, Tab } from '@mui/material';
+import '../App.css';
 
-export default function navbar() {
-  return (
-    <div style={{display:"flex"}}>
-      <p style={{paddingRight:"100px"}}>Home</p>
-      <p style={{paddingRight:"100px"}}>Add PB</p>
-      <p style={{paddingRight:"100px"}}>My personal bests</p>
-      <p style={{paddingRight:"100px"}}>About</p>
-    </div>
-  )
+export default function Navbar() {
+	const [ value, setValue ] = useState(0);
+
+	const handleChange = (e, val) => {
+		setValue(val);
+	};
+
+	return (
+		<Box>
+			<Tabs
+				value={value}
+				onChange={handleChange}
+				sx={{ textAlign: 'center' }}
+				indicatorColor="secondary"
+				textColor="inherit"
+			>
+				<Tab label="HOME" />
+				<Tab label="ADD PERSONAL BEST" />
+				<Tab label="MY BEST ROUNDS" />
+			</Tabs>
+		</Box>
+	);
 }

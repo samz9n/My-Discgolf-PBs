@@ -1,20 +1,16 @@
 import './App.css';
-import AddPb from './components/AddPb';
+import SelectCourse from './components/SelectCourse'
 import MyBestRounds from './components/MyBestRounds';
 import Navbar from "./components/Navbar"
+import AddPersonalBest from './components/AddPersonalBest';
 
 function App() {
   return (
     <div> 
-      <nav>
         <Navbar />
-      </nav>
-      <div>
-        <AddPb />
-      </div>
-      <div>
+        <SelectCourse />
         <MyBestRounds />
-      </div>
+        <AddPersonalBest />
     </div>
   );
 }
