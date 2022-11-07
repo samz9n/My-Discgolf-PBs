@@ -11,7 +11,7 @@ export default function AddPersonalBest() {
 			</Typography>
 			<FormControl>
 				<TextField
-					sx={{ width: '200px'}}
+					sx={{ width: '200px', margin: '5px'}}
 					label="Total score"
 					variant="standard"
 					multiline

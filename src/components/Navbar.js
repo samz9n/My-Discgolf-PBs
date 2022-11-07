@@ -1,9 +1,10 @@
 import { React, useState } from 'react';
-import { Box, Tabs, Tab } from '@mui/material';
+import { Box, AppBar, Toolbar, Tabs, Tab } from '@mui/material';
 import '../App.css';
+import { Link, Outlet } from "react-router-dom";
 
 export default function Navbar() {
-	const [ value, setValue ] = useState(0);
+	const [ value, setValue ] = useState('one');
 
 	const handleChange = (e, val) => {
 		setValue(val);
@@ -11,17 +12,22 @@ export default function Navbar() {
 
 	return (
 		<Box>
-			<Tabs
-				value={value}
-				onChange={handleChange}
-				sx={{ textAlign: 'center' }}
-				indicatorColor="secondary"
-				textColor="inherit"
-			>
-				<Tab label="HOME" />
-				<Tab label="ADD PERSONAL BEST" />
-				<Tab label="MY BEST ROUNDS" />
-			</Tabs>
+			<AppBar position="static">
+				<Toolbar>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						textColor="inherit"
+						indicatorColor="secondary"
+						aria-label="secondary tabs example"
+					>
+						<Tab value="one" label="Home" component={Link} to='home' />
+						<Tab value="two" label="Add Score" component={Link} to='selectcourse' />
+						<Tab value="three" label="My Best Rounds" component={Link} to='mybestrounds' />
+					</Tabs>
+				</Toolbar>
+			</AppBar>
+			<Outlet></Outlet>
 		</Box>
 	);
 }
