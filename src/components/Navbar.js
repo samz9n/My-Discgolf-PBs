@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Box, AppBar, Toolbar, Tabs, Tab } from '@mui/material';
+import { Box, AppBar, Toolbar, Tabs, Tab, Typography } from '@mui/material';
 import '../App.css';
 import { Link, Outlet } from "react-router-dom";
 
@@ -14,6 +14,7 @@ export default function Navbar() {
 		<Box>
 			<AppBar position="static">
 				<Toolbar>
+				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLDPBS</Typography>
 					<Tabs
 						value={value}
 						onChange={handleChange}

@@ -8,6 +8,7 @@ export default function AddPb() {
 	const [ courses, setCourses ] = useState([]);
 	const [ err, setErr ] = useState('Searching...');
 
+//FETCH FINNISH COURSES and sort them to be logical and relevant
 	const fetchUrl = async () => {
 		try {
 			const response = await fetch('https://discgolfmetrix.com/api.php?content=courses_list&country_code=FI');
