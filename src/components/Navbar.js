@@ -14,7 +14,7 @@ export default function Navbar() {
 		<Box>
 			<AppBar position="static">
 				<Toolbar>
-				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLDPBS</Typography>
+				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLFPBS</Typography>
 					<Tabs
 						value={value}
 						onChange={handleChange}

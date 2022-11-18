@@ -6,6 +6,7 @@ import AddPersonalBest from './AddPersonalBest';
 
 export default function AddPb() {
 	const [ courses, setCourses ] = useState([]);
+	const [selectedCourse, setSelectedCourse] = useState('');
 	const [ err, setErr ] = useState('Searching...');
 
 //FETCH FINNISH COURSES and sort them to be logical and relevant
@@ -43,8 +44,8 @@ export default function AddPb() {
 	}
 
 	return (
-		<Box sx={{display:'flex', justifyContent: 'space-around'}}>
-			<Box sx={{ maxHeight: '500px', overflow: 'auto', maxWidth: '500px' }}>
+		<Box sx={{display:'flex', justifyContent: 'space-evenly'}}>
+			<Box sx={{ maxHeight: '500px', overflow: 'auto', minWidth:'500px', marginTop:'25px' }}>
 				<Typography variant="h4" className="sticky-top">
 					Select course
 				</Typography>
@@ -56,6 +57,9 @@ export default function AddPb() {
 				</Typography>
 
 				<Autocomplete
+					onInputChange={(e, newInputValue)=>{
+						setSelectedCourse(newInputValue);
+					}}
 					className="sticky-top"
 					disableClearable
 					options={courses}
@@ -85,7 +89,7 @@ export default function AddPb() {
 					})}
 				</Box> */}
 			</Box>
-			<AddPersonalBest />
+			<AddPersonalBest selectedCourse = {selectedCourse} courses={courses}/>
 		</Box>
 	);
 }
