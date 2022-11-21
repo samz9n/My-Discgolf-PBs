@@ -56,7 +56,20 @@ app.post('/round/add', (req, res, next) => {
 		});
 })
 
-//FOR IMAGES
+//DELETE SELECTED ROUND
+app.get('/round/delete/:id', (req, res, next) => {
+	let id = req.params.id;
+
+	db.run('DELETE FROM bestRound WHERE id = ?', [id], function (error, result) {
+		if (error) throw error;
+
+		return res.status(200).json({ count: this.changes });
+	})
+
+})
+
+
+//FOR IMAGES(POST)
 /* const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -90,18 +103,6 @@ app.post('/round/add', upload.single('kuva'), (req, res, next) => {
 	var file = './images/' + req.params.nimi;
 	res.download(file);
 }); */
-
-//DELETE SELECETD ROUND
-app.get('/round/delete/:id', (req, res, next) => {
-	let id = req.params.id;
-
-	db.run('DELETE FROM round WHERE id = ?', [id], function (error, result) {
-		if (error) throw error;
-
-		return res.status(200).json({ count: this.changes });
-	})
-
-})
 
 app.get('*', (req, res, next) => {
 	return res.status(404).json({ error: true, message: 'Nothing to fetch' });
