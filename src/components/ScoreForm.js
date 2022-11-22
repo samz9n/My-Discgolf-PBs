@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
 import React from 'react';
 
-export default function AddPersonalBest(props) {
+export default function ScoreForm(props) {
 	return (
 		<Box sx={{minWidth:'400px'}}>
 			<br />

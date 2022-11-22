@@ -1,12 +1,25 @@
-import { Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import React from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
-export default function MyBestRounds() {
+export default function MyBestRounds(props) {
 	return (
-		<Typography>
-			List of courses and my personal bests on them. Here you can edit and remove the course and it's stats.{' '}
-			<br />
-			This info will be saved in the database and show on the "My personal bests" page.
-		</Typography>
+		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+			<Button sx={{ margin: '1rem' }} variant="contained" component={Link} to="/addscore">
+				Back to adding scores
+			</Button>
+			{/* IF THERE IS NO ADDED BESTROUNDS, SHOW TEXT */}
+			{props.bestRounds.length === 0 && (
+				<Typography variant="h6">
+					No added personal bests
+				</Typography>
+			)}
+			{
+				props.bestRounds.map((round)=>{
+					return <Typography>{round.course}</Typography>
+				})
+			}
+			<Outlet></Outlet>
+		</Box>
 	);
 }

@@ -2,9 +2,9 @@ import { Autocomplete, Link, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import AddPersonalBest from './AddPersonalBest';
+import ScoreForm from './ScoreForm';
 
-export default function AddPb() {
+export default function AddScore() {
 	const [ courses, setCourses ] = useState([]);
 	const [selectedCourse, setSelectedCourse] = useState('');
 	const [ err, setErr ] = useState('Searching...');
@@ -89,7 +89,7 @@ export default function AddPb() {
 					})}
 				</Box> */}
 			</Box>
-			<AddPersonalBest selectedCourse = {selectedCourse} courses={courses}/>
+			<ScoreForm selectedCourse = {selectedCourse} courses={courses}/>
 		</Box>
 	);
 }

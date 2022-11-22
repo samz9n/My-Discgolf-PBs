@@ -23,7 +23,7 @@ export default function Navbar() {
 						aria-label="secondary tabs example"
 					>
 						<Tab value="one" label="Home" component={Link} to='home' />
-						<Tab value="two" label="Add Score" component={Link} to='selectcourse' />
+						<Tab value="two" label="Add Score" component={Link} to='addscore' />
 						<Tab value="three" label="My Best Rounds" component={Link} to='mybestrounds' />
 					</Tabs>
 				</Toolbar>
