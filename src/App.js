@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
-
+	const [ navTabValue, setNavTabValue ] = useState('one');
 	const [bestRounds, setBestRounds] = useState([]);
 	const [err, setErr] = useState('Loading...')
 	const getAllBestRounds = async () => {
@@ -35,10 +35,10 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Navbar />}>
+				<Route path="/" element={<Navbar setNavTabValue={setNavTabValue} navTabValue={navTabValue} />}>
 					<Route path="home" element={<Home />} />
 					<Route path="addscore" element={<AddScore />} />
-					<Route path="mybestrounds" element={<MyBestRounds bestRounds ={bestRounds} />} />
+					<Route path="mybestrounds" element={<MyBestRounds bestRounds ={bestRounds} setNavTabValue={setNavTabValue} />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

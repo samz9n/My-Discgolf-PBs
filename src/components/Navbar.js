@@ -3,11 +3,11 @@ import { Box, AppBar, Toolbar, Tabs, Tab, Typography } from '@mui/material';
 import '../App.css';
 import { Link, Outlet } from "react-router-dom";
 
-export default function Navbar() {
-	const [ value, setValue ] = useState('one');
+export default function Navbar(props) {
+	
 
 	const handleChange = (e, val) => {
-		setValue(val);
+		props.setNavTabValue(val);
 	};
 
 	return (
@@ -16,7 +16,7 @@ export default function Navbar() {
 				<Toolbar>
 				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLFPBS</Typography>
 					<Tabs
-						value={value}
+						value={props.navTabValue}
 						onChange={handleChange}
 						textColor="inherit"
 						indicatorColor="secondary"

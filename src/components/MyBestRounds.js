@@ -4,19 +4,28 @@ import { Link } from 'react-router-dom';
 
 export default function MyBestRounds(props) {
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [isOpen, setIsOpen] = useState(false);
+	const [ isOpen, setIsOpen ] = useState(false);
 
 	const handleClick = (event) => {
 		const id = event.currentTarget;
-		setAnchorEl(anchorEl ? null : id)
-		console.log(id)
+		setAnchorEl(anchorEl ? null : id);
+		console.log(id);
 	};
 
 	const open = Boolean(anchorEl);
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			<Button sx={{ margin: '1rem' }} variant="contained" component={Link} to="/addscore">
+			<Button
+				sx={{ margin: '1rem' }}
+				variant="contained"
+				component={Link}
+				to="/addscore"
+				/* SETS "ADD SCORE"-TAB TO ACTIVE IN NAVBAR */
+				onClick={() => {
+					props.setNavTabValue('two');
+				}}
+			>
 				Back to adding scores
 			</Button>
 			{/* IF THERE IS NO ADDED BEST ROUNDS, SHOW TEXT */}
