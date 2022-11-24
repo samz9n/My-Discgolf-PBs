@@ -33,9 +33,10 @@ input[type=text] {
   height: 40px;
 }
 .transformed-text {
+  font-family: 'Kotta One', serif !important;
   transform: translate(-5px, -3px) rotate(-5deg);
   box-shadow: 4px 7px #414040;
-  border: 2px solid rgb(167, 248, 248);
+  border: 2px solid rgb(97, 24, 91);
   color: rgb(255, 255, 255);
-  background-color: rgb(50, 183, 216);
+  background-color: rgb(190, 64, 248);
 }
