@@ -48,7 +48,7 @@ app.get('/round/one/:id', (req, res, next) => {
 app.post('/round/add', (req, res, next) => {
 	let round = req.body;
 
-	db.run('insert into bestRound (course,score,holeinones,birdies,pars,bogeys,doublebogeys,tripleorworse) values (?, ?, ?, ?, ?, ?, ?,?)',
+	db.run('INSERT INTO bestRound (course,score,holeinones,birdies,pars,bogeys,doublebogeys,tripleorworse) values (?, ?, ?, ?, ?, ?, ?,?)',
 		[round.course, round.score, round.holeinones, round.birdies, round.pars, round.bogeys, round.doublebogeys, round.tripleorworse], (error, result) => {
 			if (error) throw error;
 

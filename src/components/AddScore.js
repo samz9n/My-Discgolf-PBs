@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ScoreForm from './ScoreForm';
 
-export default function AddScore() {
+export default function AddScore(props) {
 	const [ courses, setCourses ] = useState([]);
 	const [selectedCourse, setSelectedCourse] = useState('');
 	const [ err, setErr ] = useState('Searching...');
@@ -89,7 +89,7 @@ export default function AddScore() {
 					})}
 				</Box> */}
 			</Box>
-			<ScoreForm selectedCourse = {selectedCourse} courses={courses}/>
+			<ScoreForm selectedCourse = {selectedCourse} courses={courses} setBestRounds={props.setBestRounds}/>
 		</Box>
 	);
 }

@@ -1,18 +1,47 @@
 import { Box, Typography, Button, Popper, Grid, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+/* COMPONENT TO TOGGLE EACH BESTROUNDS ROUND DETAILS */
+const TogglePopper = ({ item, id }) => {
+	const [ toggleThisPopper, setToggleThisPopper ] = useState(false);
+	const [ anchorEl, setAnchorEl ] = useState(null);
+	return (
+		<Box key={id}>
+			<Button
+				size="small"
+				onClick={(e) => {
+					setToggleThisPopper((prev) => !prev);
+					setAnchorEl(anchorEl ? null : e.currentTarget);
+				}}
+			>
+				Round details
+			</Button>
+			<Popper open={toggleThisPopper} anchorEl={anchorEl}>
+				<Box sx={{ border: 1, p: 1, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
+					<Typography>Hole in ones: {item.holeinones}</Typography>
+					<Typography>Birdies: {item.birdies}</Typography>
+					<Typography>Pars: {item.pars}</Typography>
+					<Typography>Bogeys: {item.bogeys}</Typography>
+					<Typography>Double-bogeys: {item.doublebogeys}</Typography>
+					<Typography>Triple-bogeys or worse: {item.tripleorworse}</Typography>
+				</Box>
+			</Popper>
+		</Box>
+	);
+};
 
 export default function MyBestRounds(props) {
-	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [ isOpen, setIsOpen ] = useState(false);
-
-	const handleClick = (event) => {
-		const id = event.currentTarget;
-		setAnchorEl(anchorEl ? null : id);
-		console.log(id);
+	/* DELETE ONE ROUND */
+	const deleteRound = async (e) => {
+		try {
+			await axios.get(`http://localhost:8080/round/delete/${e.target.id}`);
+			props.getAllBestRounds();
+		} catch (error) {
+			console.log(error);
+		}
 	};
-
-	const open = Boolean(anchorEl);
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -57,15 +86,11 @@ export default function MyBestRounds(props) {
 											{/* SHOW + SIGN IF SCORE IS BIGGER THAN 0 */}
 											<strong>{round.score > 0 ? '+' + round.score : round.score}</strong>
 										</Typography>
-										<Button name={round.course} size="small" onClick={handleClick}>
-											Round details
-										</Button>
-										<Popper open={open} anchorEl={anchorEl}>
-											<Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-												{round.course}
-											</Box>
-										</Popper>
+										{/* TAKES THE CUSTOM COMPONENT "TOGGLEPOPPER" AND PASSES ROUND ATTRIBUTES FROM MAPPED BESTROUNDS */}
+										<TogglePopper id={round.id} item={round} />
+										{/* EDIT AND REMOVE BUTTONS */}
 										<Box
+											key={round.id}
 											sx={{
 												display: 'flex',
 												justifyContent: 'space-between',
@@ -76,7 +101,13 @@ export default function MyBestRounds(props) {
 											<Button size="small" variant="contained">
 												EDIT
 											</Button>
-											<Button size="small" variant="contained" color="error">
+											<Button
+												id={round.id}
+												onClick={deleteRound}
+												size="small"
+												variant="contained"
+												color="error"
+											>
 												REMOVE
 											</Button>
 										</Box>

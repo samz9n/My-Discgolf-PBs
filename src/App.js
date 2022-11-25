@@ -11,7 +11,7 @@ import axios from 'axios';
 function App() {
 	const [ navTabValue, setNavTabValue ] = useState('one');
 	const [bestRounds, setBestRounds] = useState([]);
-	const [err, setErr] = useState('Loading...')
+	const [err, setErr] = useState('Loading...');
 	const getAllBestRounds = async () => {
 		try {
 			const response = await axios.get('http://localhost:8080/round/all')
@@ -37,8 +37,8 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Navbar setNavTabValue={setNavTabValue} navTabValue={navTabValue} />}>
 					<Route path="home" element={<Home />} />
-					<Route path="addscore" element={<AddScore />} />
-					<Route path="mybestrounds" element={<MyBestRounds bestRounds ={bestRounds} setNavTabValue={setNavTabValue} />} />
+					<Route path="addscore" element={<AddScore setBestRounds={setBestRounds} />} />
+					<Route path="mybestrounds" element={<MyBestRounds bestRounds ={bestRounds} setNavTabValue={setNavTabValue} getAllBestRounds={getAllBestRounds} />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
