@@ -89,7 +89,7 @@ export default function AddScore(props) {
 					})}
 				</Box> */}
 			</Box>
-			<ScoreForm selectedCourse = {selectedCourse} courses={courses} setBestRounds={props.setBestRounds}/>
+			<ScoreForm selectedCourse = {selectedCourse} setSelectedCourse={setSelectedCourse} courses={courses} setBestRounds={props.setBestRounds}/>
 		</Box>
 	);
 }

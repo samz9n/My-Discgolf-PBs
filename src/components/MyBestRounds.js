@@ -1,47 +1,23 @@
-import { Box, Typography, Button, Popper, Grid, Paper } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Typography, Button, Grid, Paper } from '@mui/material';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import TogglePopper from './TogglePopper';
 
-/* COMPONENT TO TOGGLE EACH BESTROUNDS ROUND DETAILS */
-const TogglePopper = ({ item, id }) => {
-	const [ toggleThisPopper, setToggleThisPopper ] = useState(false);
-	const [ anchorEl, setAnchorEl ] = useState(null);
-	return (
-		<Box key={id}>
-			<Button
-				size="small"
-				onClick={(e) => {
-					setToggleThisPopper((prev) => !prev);
-					setAnchorEl(anchorEl ? null : e.currentTarget);
-				}}
-			>
-				Round details
-			</Button>
-			<Popper open={toggleThisPopper} anchorEl={anchorEl}>
-				<Box sx={{ border: 1, p: 1, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
-					<Typography>Hole in ones: {item.holeinones}</Typography>
-					<Typography>Birdies: {item.birdies}</Typography>
-					<Typography>Pars: {item.pars}</Typography>
-					<Typography>Bogeys: {item.bogeys}</Typography>
-					<Typography>Double-bogeys: {item.doublebogeys}</Typography>
-					<Typography>Triple-bogeys or worse: {item.tripleorworse}</Typography>
-				</Box>
-			</Popper>
-		</Box>
-	);
-};
 
 export default function MyBestRounds(props) {
 	/* DELETE ONE ROUND */
 	const deleteRound = async (e) => {
 		try {
 			await axios.get(`http://localhost:8080/round/delete/${e.target.id}`);
-			props.getAllBestRounds();
 		} catch (error) {
 			console.log(error);
 		}
 	};
+	/* FETCH BEST ROUNDS WHEN BESTROUNDS ARRAY CHANGES */
+	useEffect(()=>{
+		props.getAllBestRounds();
+	},[props.bestRounds])
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -60,8 +36,7 @@ export default function MyBestRounds(props) {
 			{/* IF THERE IS NO ADDED BEST ROUNDS, SHOW TEXT */}
 			{props.bestRounds.length === 0 && <Typography variant="h6">No added personal bests</Typography>}
 
-			<Grid sx={{ flexGrow: 1 }} container spacing={2}>
-				<Grid item xs={12}>
+			<Grid sx={{ flexGrow: 1, marginTop:'1rem' }} container spacing={2}>
 					<Grid container justifyContent="center" spacing={2}>
 						{/* MAP OVER ALL BEST ROUNDS */}
 						{props.bestRounds.map((round) => {
@@ -90,7 +65,6 @@ export default function MyBestRounds(props) {
 										<TogglePopper id={round.id} item={round} />
 										{/* EDIT AND REMOVE BUTTONS */}
 										<Box
-											key={round.id}
 											sx={{
 												display: 'flex',
 												justifyContent: 'space-between',
@@ -116,7 +90,6 @@ export default function MyBestRounds(props) {
 							);
 						})}
 					</Grid>
-				</Grid>
 			</Grid>
 		</Box>
 	);
