@@ -3,7 +3,6 @@ import AddScore from './components/AddScore';
 import MyBestRounds from './components/MyBestRounds';
 import Navbar from './components/Navbar';
 import Home from './components/Home'
-/* import AddPersonalBest from './components/AddPersonalBest'; */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';

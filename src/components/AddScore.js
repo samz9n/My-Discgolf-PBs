@@ -74,20 +74,6 @@ export default function AddScore(props) {
 						/>
 					)}
 				/>
-				{/* Tämä jos haluaa näkyville kaikki radat. (hidasti sovellusta)
-				<Box>
-					{courses.map((course, idx) => {
-						return (
-							<List key={idx} disablePadding>
-								<ListItem disablePadding>
-									<ListItemButton>
-										<ListItemText primary={course}/>
-									</ListItemButton>
-								</ListItem>
-							</List>
-						);
-					})}
-				</Box> */}
 			</Box>
 			<ScoreForm selectedCourse = {selectedCourse} setSelectedCourse={setSelectedCourse} courses={courses} setBestRounds={props.setBestRounds}/>
 		</Box>

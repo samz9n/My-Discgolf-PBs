@@ -1,35 +1,54 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
 
 export default function ScoreForm(props) {
 	const [ newRound, setNewRound ] = useState({
-		course: '',
-		score: null,
-		holeinones: null,
-		birdies: null,
-		pars: null,
-		bogeys: null,
-		doublebogeys: null,
-		tripleorworse: null
+		course: "",
+		score: "",
+		holeinones: "",
+		birdies: "",
+		pars: "",
+		bogeys: "",
+		doublebogeys: "",
+		tripleorworse: ""
 	});
 	const [ shownMessage, setShownMessage ] = useState('');
+	/* DISABLE SUBMIT BUTTON IF ANY FORM INPUT IS EMPTY */
+	const [isDisabled, setIsDisabled] = useState(false);
+	useEffect(()=> {
+		/* SETS THE COURSE TO SELECTED COURSE */
+		setNewRound((prevState)=>({
+			...prevState,
+		   course : props.selectedCourse
+	   }));
+		for(let item in newRound) {
+			if(newRound[item]==="" || props.selectedCourse==="") {
+				setIsDisabled(true);
+			} else {
+				setIsDisabled(false);
+			}
+		}
+	},[newRound, props.selectedCourse])
 
 	const handleChange = (e) => {
 		setNewRound((prevState)=>({
 			 ...prevState,
 			[e.target.name] : e.target.value,
-			course : props.selectedCourse
+			/* course : props.selectedCourse */
 		}));
 		setShownMessage('');
+		/* CLEAR VALIDATION ERRORS WHEN FIELD IS EMPTY */
+		if(e.target.value==="") {
+			clearErrors(e.target.name)
+		}
 	}
 	
 	/* ADDING NEW ROUND */
 	const addRound = async (e) => {
-		e.preventDefault();
 		const formData = {
 			course: newRound.course,
 			score: newRound.score,
@@ -45,13 +64,13 @@ export default function ScoreForm(props) {
 			await axios.post('http://localhost:8080/round/add', formData);
 			setNewRound({
 				course: '',
-				score: null,
-				holeinones: null,
-				birdies: null,
-				pars: null,
-				bogeys: null,
-				doublebogeys: null,
-				tripleorworse: null
+				score: "",
+				holeinones: "",
+				birdies: "",
+				pars: "",
+				bogeys: "",
+				doublebogeys: "",
+				tripleorworse: ""
 			});
 			props.setSelectedCourse('')
 			setShownMessage("Course added to my best rounds")
@@ -61,22 +80,23 @@ export default function ScoreForm(props) {
 		}
 	};
 
-	// FORM VALIDATION
+	// FORM VALIDATION WITH 3RD PARTY LIBRARY YUP
 	const validationSchema = Yup.object().shape({
 		course: Yup.string(),
 		score: Yup.number().required().integer().typeError('Score must be a number'),
-		holeinones: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Hole-in-ones must be a number'),
-		birdies: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Birdies must be a number'),
-		pars: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Pars must be a number'),
-		bogeys: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Bogeys must be a number'),
-		doublebogeys: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Double-bogeys must be a number'),
-		tripleorworse: Yup.number().required().positive().typeError('Cannot be negative').integer().typeError('Triple-bogeys or worse must be a number'),
+		holeinones: Yup.number().required().min(0).integer().typeError('Hole-in-ones must be a number'),
+		birdies: Yup.number().required().min(0).integer().typeError('Birdies must be a number'),
+		pars: Yup.number().required().min(0).integer().typeError('Pars must be a number'),
+		bogeys: Yup.number().required().min(0).integer().typeError('Bogeys must be a number'),
+		doublebogeys: Yup.number().required().min(0).integer().typeError('Double-bogeys must be a number'),
+		tripleorworse: Yup.number().required().min(0).integer().typeError('Triple-bogeys or worse must be a number'),
 	})
 
 	const {
 		register, 
 		handleSubmit, 
-		formState: {errors}
+		formState: {errors},
+		clearErrors
 	} = useForm({
 		resolver: yupResolver(validationSchema)
 	});
@@ -88,7 +108,8 @@ export default function ScoreForm(props) {
 				backgroundColor: 'lightgray',
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'center'
+				alignItems: 'center',
+				marginTop: '1.4rem'
 			}}
 		>
 			<br />
@@ -112,7 +133,7 @@ export default function ScoreForm(props) {
 					error={errors.score ? true : false}
 					helperText={errors.score?.message}
 					/* ----------------------------- */
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -125,7 +146,7 @@ export default function ScoreForm(props) {
 					{...register('holeinones')}
 					error={errors.holeinones ? true : false}
 					helperText={errors.holeinones?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -138,7 +159,7 @@ export default function ScoreForm(props) {
 					{...register('birdies')}
 					error={errors.birdies ? true : false}
 					helperText={errors.birdies?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -151,7 +172,7 @@ export default function ScoreForm(props) {
 					{...register('pars')}
 					error={errors.pars ? true : false}
 					helperText={errors.pars?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -164,7 +185,7 @@ export default function ScoreForm(props) {
 					{...register('bogeys')}
 					error={errors.bogeys ? true : false}
 					helperText={errors.bogeys?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -177,7 +198,7 @@ export default function ScoreForm(props) {
 					{...register('doublebogeys')}
 					error={errors.doublebogeys ? true : false}
 					helperText={errors.doublebogeys?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<TextField
 					required
@@ -190,7 +211,7 @@ export default function ScoreForm(props) {
 					{...register('tripleorworse')}
 					error={errors.tripleorworse ? true : false}
 					helperText={errors.tripleorworse?.message}
-					onChange={(e)=>handleChange}
+					onChange={(e)=>handleChange(e)}
 				/>
 				<Button
 					/* FIRST CHECKS IF HANDLESUBMIT (FROM VALIDATION) IS OK, THEN CALLS ADDROUND */
@@ -198,6 +219,7 @@ export default function ScoreForm(props) {
 					variant="contained"
 					color="primary"
 					sx={{ margin: '5px' }}
+					disabled={isDisabled}
 				>
 					submit
 				</Button>
