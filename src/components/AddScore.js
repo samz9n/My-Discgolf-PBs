@@ -6,10 +6,15 @@ import ScoreForm from './ScoreForm';
 
 export default function AddScore(props) {
 	const [ courses, setCourses ] = useState([]);
-	const [selectedCourse, setSelectedCourse] = useState('');
+	const [ selectedCourse, setSelectedCourse ] = useState('');
 	const [ err, setErr ] = useState('Searching...');
 
-//FETCH FINNISH COURSES and sort them to be logical and relevant
+	let tempRounds = [];
+	props.bestRounds.map((round)=>{
+		return tempRounds.push(round.course)
+	})
+
+	//FETCH FINNISH COURSES and sort them to be logical and relevant
 	const fetchUrl = async () => {
 		try {
 			const response = await fetch('https://discgolfmetrix.com/api.php?content=courses_list&country_code=FI');
@@ -44,8 +49,8 @@ export default function AddScore(props) {
 	}
 
 	return (
-		<Box sx={{display:'flex', justifyContent: 'space-evenly'}}>
-			<Box sx={{ maxHeight: '500px', overflow: 'auto', minWidth:'500px', marginTop:'25px' }}>
+		<Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+			<Box sx={{ maxHeight: '500px', overflow: 'auto', minWidth: '500px', marginTop: '25px' }}>
 				<Typography variant="h4" className="sticky-top">
 					Select course
 				</Typography>
@@ -57,12 +62,14 @@ export default function AddScore(props) {
 				</Typography>
 
 				<Autocomplete
-					onInputChange={(e, newInputValue)=>{
+					onInputChange={(e, newInputValue) => {
 						setSelectedCourse(newInputValue);
 					}}
 					className="sticky-top"
 					disableClearable
 					options={courses}
+					/* DISABLES COURSE IF ALREADY ADDED TO BEST ROUNDS */
+					getOptionDisabled={(option) => !!tempRounds.find(el=>el===option)}
 					renderInput={(params) => (
 						<TextField
 							{...params}
@@ -75,7 +82,12 @@ export default function AddScore(props) {
 					)}
 				/>
 			</Box>
-			<ScoreForm selectedCourse = {selectedCourse} setSelectedCourse={setSelectedCourse} courses={courses} setBestRounds={props.setBestRounds}/>
+			<ScoreForm
+				selectedCourse={selectedCourse}
+				setSelectedCourse={setSelectedCourse}
+				courses={courses}
+				setBestRounds={props.setBestRounds}
+			/>
 		</Box>
 	);
 }
