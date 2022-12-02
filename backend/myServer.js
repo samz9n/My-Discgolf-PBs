@@ -27,47 +27,139 @@ app.get('/round/all', (req, res, next) => {
 		if (error) throw error;
 
 		return res.status(200).json(results);
-	}) // db.all
-})
+	}); // db.all
+});
 
 //GET ONE ROUND BY ID
 app.get('/round/one/:id', (req, res, next) => {
 	let id = req.params.id;
-	db.get('SELECT * FROM bestRound where id=?', [id], (error, result) => {
+	db.get('SELECT * FROM bestRound where id=?', [ id ], (error, result) => {
 		if (error) throw error;
 
-		if (typeof (result) === 'undefined') {
+		if (typeof result === 'undefined') {
 			return res.status(200).json({});
 		}
 
 		return res.status(200).json(result);
-	}) // db.get
-})
+	}); // db.get
+});
 
 //ADD ROUND
 app.post('/round/add', (req, res, next) => {
 	let round = req.body;
 
-	db.run('INSERT INTO bestRound (course,score,holeinones,birdies,pars,bogeys,doublebogeys,tripleorworse) values (?, ?, ?, ?, ?, ?, ?,?)',
-		[round.course, round.score, round.holeinones, round.birdies, round.pars, round.bogeys, round.doublebogeys, round.tripleorworse], (error, result) => {
+	db.run(
+		'INSERT INTO bestRound (course,score,holeinones,birdies,pars,bogeys,doublebogeys,tripleorworse) values (?, ?, ?, ?, ?, ?, ?,?)',
+		[
+			round.course,
+			round.score,
+			round.holeinones,
+			round.birdies,
+			round.pars,
+			round.bogeys,
+			round.doublebogeys,
+			round.tripleorworse
+		],
+		(error, result) => {
 			if (error) throw error;
 
 			return res.status(200).json({ count: 1 });
-		});
-})
+		}
+	);
+});
 
 //DELETE SELECTED ROUND
 app.get('/round/delete/:id', (req, res, next) => {
 	let id = req.params.id;
 
-	db.run('DELETE FROM bestRound WHERE id = ?', [id], function (error, result) {
+	db.run('DELETE FROM bestRound WHERE id = ?', [ id ], function(error, result) {
 		if (error) throw error;
 
 		return res.status(200).json({ count: this.changes });
-	})
+	});
+});
 
-})
+/* app.put('/round/edit/:id', (req, res, next) => {
+	let data = {
+		id: req.body.id,
+		course: req.body.course,
+		score: req.body.score,
+		holeinones: req.body.holeinones,
+		birdies: req.body.birdies,
+		pars: req.body.pars,
+		bogeys: req.body.bogeys,
+		doublebogeys: req.body.doublebogeys,
+		tripleorworse: req.body.tripleorworse
+	};
+	let id = req.params.id;
+	db.run(
+		`UPDATE bestRound SET
+		   course = ?,
+           score = ?, 
+           holeinones = ?,
+		   birdies = ?,
+		   pars = ?,
+		   bogeys = ?,
+		   doublebogeys = ?,
+		   tripleorworse = ? 
+           WHERE id = ?`,
+		[
+			data.course,
+			data.score,
+			data.holeinones,
+			data.birdies,
+			data.pars,
+			data.bogeys,
+			data.doublebogeys,
+			data.tripleorworse,
+			id
+		],
+		function(err, result) {
+			if (err) {
+				return res.status(400).json({error: err.message});
+			}
+			return res.status(200).json({
+				data: data,
+				changes: this.changes
+			});
+		}
+	);
+}); */
 
+app.patch('/round/edit/:id', (req, res, next) => {
+	let data = {
+		score: req.body.score,
+		holeinones: req.body.holeinones,
+		birdies: req.body.birdies,
+		pars: req.body.pars,
+		bogeys: req.body.bogeys,
+		doublebogeys: req.body.doublebogeys,
+		tripleorworse: req.body.tripleorworse
+	};
+	let id = req.params.id;
+	db.run(
+		`UPDATE bestRound set 
+           score = COALESCE(?,score), 
+           holeinones = COALESCE(?,holeinones),
+		   birdies = COALESCE(?,birdies),
+		   pars = COALESCE(?,pars),
+		   bogeys = COALESCE(?,bogeys),
+		   doublebogeys = COALESCE(?,doublebogeys),
+		   tripleorworse = COALESCE(?,tripleorworse)
+           WHERE id = ?`,
+		[ data.score, data.holeinones, data.birdies, data.pars, data.bogeys, data.doublebogeys, data.tripleorworse, id],
+		function(err, result) {
+			if (err) {
+				return res.status(400).json({ error: res.message, data: data});
+				
+			}
+				return res.status(200).json({
+				data: data,
+				changes: this.changes
+			});
+		}
+	);
+});
 
 //FOR IMAGES(POST)
 /* const multer = require('multer');
@@ -106,4 +198,4 @@ app.post('/round/add', upload.single('kuva'), (req, res, next) => {
 
 app.get('*', (req, res, next) => {
 	return res.status(404).json({ error: true, message: 'Nothing to fetch' });
-})
+});

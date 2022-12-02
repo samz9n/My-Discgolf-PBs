@@ -1,11 +1,22 @@
 import { Box, Typography, Button, Grid, Paper } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import TogglePopper from './TogglePopper';
+import EditModal from './EditModal';
 
 
 export default function MyBestRounds(props) {
+	const [openModal, setOpenModal] = useState(false);
+	/* const handleOpenModal = () => setOpenModal(true); */
+	/* const handleCloseModal = () => setOpenModal(false); */
+	/* const [showEditModal, setShowEditModal] = useState(false); */
+
+/* 	const editButtonPress = (e) => {
+		setOpenModal(true);
+		console.log(openModal)
+	}
+ */
 	/* DELETE ONE ROUND */
 	const deleteRound = async (e) => {
 		try {
@@ -17,7 +28,7 @@ export default function MyBestRounds(props) {
 	/* FETCH BEST ROUNDS WHEN BESTROUNDS ARRAY CHANGES */
 	useEffect(()=>{
 		props.getAllBestRounds();
-	},[props.bestRounds])
+	},[props])
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -72,9 +83,10 @@ export default function MyBestRounds(props) {
 												marginTop: '2px'
 											}}
 										>
-											<Button size="small" variant="contained">
+											<Button onClick={(e)=> setOpenModal(prev => !prev)} size="small" variant="contained">
 												EDIT
 											</Button>
+											{openModal && <EditModal id={round.id} item={round} />}
 											<Button
 												id={round.id}
 												onClick={deleteRound}
