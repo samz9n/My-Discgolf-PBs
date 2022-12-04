@@ -11,6 +11,7 @@ function App() {
 	const [ navTabValue, setNavTabValue ] = useState('one');
 	const [bestRounds, setBestRounds] = useState([]);
 	const [err, setErr] = useState('Loading...');
+	
 	const getAllBestRounds = async () => {
 		try {
 			const response = await axios.get('http://localhost:8080/round/all')
@@ -26,6 +27,14 @@ function App() {
 	useEffect(()=>{
 		getAllBestRounds();
 	},[])
+
+	/* CHECKS THAT NAVIGATION TAB IS RIGHT, EVEN AFTER PAGE REFRESH */
+	useEffect(() => {
+		let path = window.location.pathname;
+		if (path === "/" && navTabValue !== 'one') setNavTabValue('one');
+		else if (path === "/addscore" && navTabValue !== 'two') setNavTabValue('two');
+		else if (path === "/mybestrounds" && navTabValue !== 'three') setNavTabValue('three');
+	  }, [navTabValue]);
 
 	if (err.length > 0) {
 		return ( <div>{ err }</div> );
