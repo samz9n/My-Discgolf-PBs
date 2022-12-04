@@ -21,7 +21,7 @@ export default function Navbar(props) {
 						textColor="primary"
 						indicatorColor="secondary"
 					>
-						<Tab sx={{marginLeft:'20px'}} value="one" label="Home" component={Link} to='home' />
+						<Tab sx={{marginLeft:'20px'}} value="one" label="Home" component={Link} to='/' />
 						<Tab sx={{marginLeft:'20px'}} value="two" label="Add Score" component={Link} to='addscore' />
 						<Tab sx={{marginLeft:'20px'}} value="three" label="My Best Rounds" component={Link} to='mybestrounds' />
 					</Tabs>
