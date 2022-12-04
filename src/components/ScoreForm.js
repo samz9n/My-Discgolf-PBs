@@ -37,8 +37,7 @@ export default function ScoreForm(props) {
 	const handleChange = (e) => {
 		setNewRound((prevState)=>({
 			 ...prevState,
-			[e.target.name] : e.target.value,
-			/* course : props.selectedCourse */
+			[e.target.name] : e.target.value
 		}));
 		setShownMessage('');
 		/* CLEAR VALIDATION ERRORS WHEN FIELD IS EMPTY */
@@ -214,7 +213,7 @@ export default function ScoreForm(props) {
 					onChange={(e)=>handleChange(e)}
 				/>
 				<Button
-					/* FIRST CHECKS IF HANDLESUBMIT (FROM VALIDATION) IS OK, THEN CALLS ADDROUND */
+					/* FIRST CHECKS IF HANDLESUBMIT (FORM VALIDATION) IS OK, THEN CALLS ADDROUND */
 					onClick={handleSubmit(addRound)}
 					variant="contained"
 					color="primary"
