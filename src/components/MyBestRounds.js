@@ -20,17 +20,18 @@ export default function MyBestRounds(props) {
 	const deleteRound = async (e) => {
 		try {
 			await axios.get(`http://localhost:8080/round/delete/${e.target.id}`);
+			props.getAllBestRounds();
 		} catch (error) {
 			console.log(error);
 		}
 	};
-	/* FETCH BEST ROUNDS WHEN BESTROUNDS ARRAY CHANGES */
-	useEffect(
+/*FETCH BEST ROUNDS WHEN BESTROUNDS ARRAY CHANGES */
+	 useEffect(
 		() => {
 			props.getAllBestRounds();
 		},
-		[ props ]
-	);
+		[]
+	); 
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -47,7 +48,7 @@ export default function MyBestRounds(props) {
 				Back to adding scores
 			</Button>
 			<Button onClick={(e) => setOpenModal((prev) => !prev)} size="small" variant="contained" color='secondary'>
-				EDIT MODE
+				{openModal ? "EDIT MODE: ON": "EDIT MODE: OFF"}
 			</Button>
 			{/* IF THERE IS NO ADDED BEST ROUNDS, SHOW TEXT */}
 			{props.bestRounds.length === 0 && <Typography variant="h6">No added personal bests</Typography>}
@@ -88,7 +89,6 @@ export default function MyBestRounds(props) {
 											marginTop: '2px'
 										}}
 									>
-										{openModal && <EditModal id={round.id} item={round} />}
 										<Button
 											id={round.id}
 											onClick={deleteRound}
@@ -98,6 +98,7 @@ export default function MyBestRounds(props) {
 										>
 											REMOVE
 										</Button>
+										{openModal && <EditModal id={round.id} item={round} getAllBestRounds={props.getAllBestRounds} />}
 									</Box>
 								</Paper>
 							</Grid>

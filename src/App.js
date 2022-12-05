@@ -44,7 +44,7 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Navbar setNavTabValue={setNavTabValue} navTabValue={navTabValue} />}>
-					<Route index element={<Home />} />
+					<Route index element={<Home setNavTabValue={setNavTabValue} />} />
 					<Route path="addscore" element={<AddScore bestRounds={bestRounds} setBestRounds={setBestRounds} />} />
 					<Route path="mybestrounds" element={<MyBestRounds bestRounds={bestRounds} setNavTabValue={setNavTabValue} getAllBestRounds={getAllBestRounds} />} />
 				</Route>

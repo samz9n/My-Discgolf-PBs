@@ -79,10 +79,8 @@ app.get('/round/delete/:id', (req, res, next) => {
 	});
 });
 
-/* app.put('/round/edit/:id', (req, res, next) => {
+app.put('/round/edit/:id', (req, res, next) => {
 	let data = {
-		id: req.body.id,
-		course: req.body.course,
 		score: req.body.score,
 		holeinones: req.body.holeinones,
 		birdies: req.body.birdies,
@@ -94,7 +92,6 @@ app.get('/round/delete/:id', (req, res, next) => {
 	let id = req.params.id;
 	db.run(
 		`UPDATE bestRound SET
-		   course = ?,
            score = ?, 
            holeinones = ?,
 		   birdies = ?,
@@ -104,7 +101,6 @@ app.get('/round/delete/:id', (req, res, next) => {
 		   tripleorworse = ? 
            WHERE id = ?`,
 		[
-			data.course,
 			data.score,
 			data.holeinones,
 			data.birdies,
@@ -124,9 +120,9 @@ app.get('/round/delete/:id', (req, res, next) => {
 			});
 		}
 	);
-}); */
+});
 
-app.patch('/round/edit/:id', (req, res, next) => {
+/* app.patch('/round/edit/:id', (req, res, next) => {
 	let data = {
 		score: req.body.score,
 		holeinones: req.body.holeinones,
@@ -159,7 +155,7 @@ app.patch('/round/edit/:id', (req, res, next) => {
 			});
 		}
 	);
-});
+}); */
 
 //FOR IMAGES(POST)
 /* const multer = require('multer');

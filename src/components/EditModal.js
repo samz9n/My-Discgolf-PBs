@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
 import { useForm } from 'react-hook-form';
 import '../App.css';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
@@ -17,20 +18,19 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({item, id}) {
+export default function BasicModal({item, id, getAllBestRounds}) {
   const [open, setOpen] = useState(false);
   const handleOpen = (e) => setOpen(true);
   const handleClose = () => setOpen(false);
   const [editDisabled, setEditDisabled] = useState(false);
   const [ editRound, setEditRound ] = useState({
-    course: "",
-    score: "",
-    holeinones: "",
-    birdies: "",
-    pars: "",
-    bogeys: "",
-    doublebogeys: "",
-    tripleorworse: ""
+    score: item.score,
+    holeinones: item.holeinones,
+    birdies: item.birdies,
+    pars: item.pars,
+    bogeys: item.bogeys,
+    doublebogeys: item.doublebogeys,
+    tripleorworse: item.tripleorworse
 });
     const [ showMessage, setShowMessage ] = useState('');
 
@@ -45,14 +45,30 @@ export default function BasicModal({item, id}) {
         clearErrors(e.target.name)
     }
     }
-
+    /* EDIT ROUND */
     const onEditRound = async ()=> {
-        
-    }
+        const formData = {
+			score: editRound.score,
+			holeinones: editRound.holeinones,
+			birdies: editRound.birdies,
+			pars: editRound.pars,
+			bogeys: editRound.bogeys,
+			doublebogeys: editRound.doublebogeys,
+			tripleorworse: editRound.tripleorworse
+		};
+        try {
+			await axios.put(`http://localhost:8080/round/edit/${id}`, formData);
+			setShowMessage("Course edited successfully")
+            /* UPDATE VIEW WITHOUT REFRESHING */
+            getAllBestRounds();
+		} catch (error) {
+			setShowMessage('Failed to edit round');
+		}
+	};
+    
 
     // FORM VALIDATION WITH 3RD PARTY LIBRARY YUP
 	const validationSchema = Yup.object().shape({
-		course: Yup.string(),
 		score: Yup.number().required().integer().typeError('Score must be a number'),
 		holeinones: Yup.number().required().min(0).integer().typeError('Hole-in-ones must be a number'),
 		birdies: Yup.number().required().min(0).integer().typeError('Birdies must be a number'),
@@ -64,7 +80,7 @@ export default function BasicModal({item, id}) {
 
 	const {
 		register, 
-		/* handleSubmit,  */
+		handleSubmit, 
 		formState: {errors},
 		clearErrors
 	} = useForm({
@@ -189,7 +205,7 @@ export default function BasicModal({item, id}) {
                     />
                     <Button
                         /* FIRST CHECKS IF HANDLESUBMIT (FORM VALIDATION) IS OK, THEN CALLS EDITROUND */
-                        /* onClick={handleSubmit(editRound)} */
+                        onClick={handleSubmit(onEditRound)}
                         variant="contained"
                         color="primary"
                         sx={{ margin: '5px' }}
