@@ -3,6 +3,7 @@ import { Box, Button, FormControl, TextField, Typography, Modal } from '@mui/mat
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
 import { useForm } from 'react-hook-form';
+import '../App.css';
 
 const style = {
   position: 'absolute',
@@ -45,6 +46,10 @@ export default function BasicModal({item, id}) {
     }
     }
 
+    const onEditRound = async ()=> {
+        
+    }
+
     // FORM VALIDATION WITH 3RD PARTY LIBRARY YUP
 	const validationSchema = Yup.object().shape({
 		course: Yup.string(),
@@ -68,7 +73,7 @@ export default function BasicModal({item, id}) {
 
   return (
     <div key={id} style={{display:'flex', justifyContent:'end'}}>
-        <button style={{heigth:'30px'}} onClick={handleOpen}>EDIT ROUND</button>
+        <button className='edit-button' onClick={handleOpen}>EDIT ROUND</button>
       <Modal
         open={open}
         onClose={handleClose}
