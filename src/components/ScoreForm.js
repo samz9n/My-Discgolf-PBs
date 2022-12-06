@@ -101,7 +101,7 @@ export default function ScoreForm(props) {
 	});
 
 	return (
-		<Box
+		<Box className='rounded-corner'
 			sx={{
 				minWidth: '400px',
 				backgroundColor: 'lightgray',

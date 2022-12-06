@@ -50,15 +50,16 @@ export default function AddScore(props) {
 
 	return (
 		<Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-			<Box sx={{ maxHeight: '500px', overflow: 'auto', minWidth: '500px', marginTop: '25px' }}>
-				<Typography variant="h4" className="sticky-top">
+			<Box className='rounded-corner' sx={{ maxHeight: '500px', overflow: 'auto', minWidth: '500px', marginTop: '25px' }}>
+				<Typography sx={{textAlign:'center'}} variant="h4" className="sticky-top">
 					Select course
 				</Typography>
-				<Typography variant="h6" className="sticky-top">
-					Courselist comes from{' '}
+				<Typography sx={{textAlign:'center'}} variant="h6" className="sticky-top">
+					<em>Courselist comes from{' '}
 					<Link href="https://discgolfmetrix.com/?u=rule&ID=37" rel="noopener noreferrer" target="_blank">
 						Metrix API
 					</Link>
+					</em>
 				</Typography>
 
 				<Autocomplete

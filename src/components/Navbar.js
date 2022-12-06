@@ -13,7 +13,7 @@ export default function Navbar(props) {
 	return (
 		<Box>
 			<AppBar sx={{backgroundColor:'white'}} position="static">
-				<Toolbar>
+				<Toolbar  className='shadow-nav'>
 				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLFPBS</Typography>
 					<Tabs
 						value={props.navTabValue}
