@@ -27,7 +27,7 @@ app.get('/round/all', (req, res, next) => {
 		if (error) throw error;
 
 		return res.status(200).json(results);
-	}); // db.all
+	}); 
 });
 
 //GET ONE ROUND BY ID
@@ -41,7 +41,7 @@ app.get('/round/one/:id', (req, res, next) => {
 		}
 
 		return res.status(200).json(result);
-	}); // db.get
+	}); 
 });
 
 //ADD ROUND
