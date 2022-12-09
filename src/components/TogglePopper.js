@@ -17,13 +17,13 @@ const TogglePopper = ({ item, id }) => {
 				Round details
 			</Button>
 			<Popper open={toggleThisPopper} anchorEl={anchorEl}>
-				<Box sx={{ border: 1, p: 1, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
-					<Typography>Hole in ones: {item.holeinones}</Typography>
-					<Typography>Birdies: {item.birdies}</Typography>
-					<Typography>Pars: {item.pars}</Typography>
-					<Typography>Bogeys: {item.bogeys}</Typography>
-					<Typography>Double-bogeys: {item.doublebogeys}</Typography>
-					<Typography>Triple-bogeys or worse: {item.tripleorworse}</Typography>
+				<Box className="rounded-corner" sx={{ border: 1, p: 1, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', alignItems:'center' }}>
+					<Typography sx={{fontSize:'1.3rem'}}>Hole in ones: {item.holeinones}</Typography>
+					<Typography sx={{fontSize:'1.3rem'}}>Birdies: {item.birdies}</Typography>
+					<Typography sx={{fontSize:'1.3rem'}}>Pars: {item.pars}</Typography>
+					<Typography sx={{fontSize:'1.3rem'}}>Bogeys: {item.bogeys}</Typography>
+					<Typography sx={{fontSize:'1.3rem'}}>Double-bogeys: {item.doublebogeys}</Typography>
+					<Typography sx={{fontSize:'1.2rem'}}>Triple-bogeys or worse: {item.tripleorworse}</Typography>
 				</Box>
 			</Popper>
 		</Box>

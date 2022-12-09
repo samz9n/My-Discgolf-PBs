@@ -7,15 +7,7 @@ import EditModal from './EditModal';
 
 export default function MyBestRounds(props) {
 	const [ openModal, setOpenModal ] = useState(false);
-	/* const handleOpenModal = () => setOpenModal(true); */
-	/* const handleCloseModal = () => setOpenModal(false); */
-	/* const [showEditModal, setShowEditModal] = useState(false); */
-
-	/* 	const editButtonPress = (e) => {
-		setOpenModal(true);
-		console.log(openModal)
-	}
- */
+	
 	/* DELETE ONE ROUND */
 	const deleteRound = async (e) => {
 		try {

@@ -6,19 +6,8 @@ import { useForm } from 'react-hook-form';
 import '../App.css';
 import axios from 'axios';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function BasicModal({item, id, getAllBestRounds}) {
+/* COMPONENT TO OPEN EACH BESTROUNDS EDIT MODAL */
+export default function EditModal({item, id, getAllBestRounds}) {
   const [open, setOpen] = useState(false);
   const handleOpen = (e) => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -96,16 +85,15 @@ export default function BasicModal({item, id, getAllBestRounds}) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-            <Box
+        <Box className='edit-modal rounded-corner'>
+            <Box className='rounded-corner'
                 sx={{
                     position:'relative',
                     minWidth: '300px',
                     backgroundColor: 'lightgray',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    marginTop: '1.4rem'
+                    alignItems: 'center'
                 }}
                 >
                 <Typography variant="h6">{item.course}</Typography>

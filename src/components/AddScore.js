@@ -1,8 +1,10 @@
-import { Autocomplete, Link, TextField, Typography } from '@mui/material';
+import {Link as RouterLink} from 'react-router-dom';
+import { Autocomplete, Button, Link, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ScoreForm from './ScoreForm';
+import StarsIcon from '@mui/icons-material/Stars';
 
 export default function AddScore(props) {
 	const [ courses, setCourses ] = useState([]);
@@ -10,9 +12,9 @@ export default function AddScore(props) {
 	const [ err, setErr ] = useState('Searching...');
 
 	let tempRounds = [];
-	props.bestRounds.map((round)=>{
-		return tempRounds.push(round.course)
-	})
+	props.bestRounds.map((round) => {
+		return tempRounds.push(round.course);
+	});
 
 	//FETCH FINNISH COURSES and sort them to be logical and relevant
 	const fetchUrl = async () => {
@@ -50,19 +52,29 @@ export default function AddScore(props) {
 
 	return (
 		<Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-			<Box className='rounded-corner' sx={{ maxHeight: '500px', overflow: 'auto', minWidth: '500px', marginTop: '25px' }}>
-				<Typography sx={{textAlign:'center'}} variant="h4" className="sticky-top">
+			<Box
+				className="rounded-corner"
+				sx={{ maxHeight: '500px', overflow: 'auto', minWidth: '500px', marginTop: '25px' }}
+			>
+				<Typography sx={{ textAlign: 'center' }} variant="h4" className="sticky-top">
 					Select course
 				</Typography>
-				<Typography sx={{textAlign:'center'}} variant="h6" className="sticky-top">
-					<em>Courselist comes from{' '}
-					<Link href="https://discgolfmetrix.com/?u=rule&ID=37" rel="noopener noreferrer" target="_blank">
-						Metrix API
-					</Link>
+				<Typography sx={{ textAlign: 'center' }} variant="h6" className="sticky-top">
+					<em>
+						Courselist comes from{' '}
+						<Link
+							href="https://discgolfmetrix.com/?u=rule&ID=37"
+							rel="noopener noreferrer"
+							target="_blank"
+							underline="none"
+						>
+							Metrix API
+						</Link>
 					</em>
 				</Typography>
 
 				<Autocomplete
+					sx={{ borderRadius: '0px 0px 4px 4px' }}
 					onInputChange={(e, newInputValue) => {
 						setSelectedCourse(newInputValue);
 					}}
@@ -70,7 +82,7 @@ export default function AddScore(props) {
 					disableClearable
 					options={courses}
 					/* DISABLES COURSE IF ALREADY ADDED TO BEST ROUNDS */
-					getOptionDisabled={(option) => !!tempRounds.find(el=>el===option)}
+					getOptionDisabled={(option) => !!tempRounds.find((el) => el === option)}
 					renderInput={(params) => (
 						<TextField
 							{...params}
@@ -83,12 +95,17 @@ export default function AddScore(props) {
 					)}
 				/>
 			</Box>
-			<ScoreForm
-				selectedCourse={selectedCourse}
-				setSelectedCourse={setSelectedCourse}
-				courses={courses}
-				setBestRounds={props.setBestRounds}
-			/>
+			<Box sx={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+				<ScoreForm
+					selectedCourse={selectedCourse}
+					setSelectedCourse={setSelectedCourse}
+					courses={courses}
+					setBestRounds={props.setBestRounds}
+				/>
+				<Button component={RouterLink} to="/mybestrounds" sx={{marginTop:'30px'}} variant='contained' color='success' startIcon={<StarsIcon />} onClick={()=> {
+					props.setNavTabValue("three");
+				}}>Check My Best Rounds</Button>
+			</Box>
 		</Box>
 	);
 }

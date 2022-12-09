@@ -14,7 +14,7 @@ export default function Navbar(props) {
 		<Box>
 			<AppBar sx={{backgroundColor:'white'}} position="static">
 				<Toolbar  className='shadow-nav'>
-				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLFPBS</Typography>
+				<Typography className='transformed-text' variant='h6' sx={{marginRight:'20px'}}>MYDISCGOLFPBs</Typography>
 					<Tabs
 						value={props.navTabValue}
 						onChange={handleChange}

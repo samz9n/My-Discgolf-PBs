@@ -104,7 +104,7 @@ export default function ScoreForm(props) {
 		<Box className='rounded-corner'
 			sx={{
 				minWidth: '400px',
-				backgroundColor: 'lightgray',
+				backgroundColor: 'white',
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
